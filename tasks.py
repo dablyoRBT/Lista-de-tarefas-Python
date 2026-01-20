@@ -1,6 +1,9 @@
 def adicionar_tarefa (lista, task):
-    maior_id = max(i["id"] for i in lista) # foi muito dificil pegar esse id n sei oq fazer tive que pesquisar
-    lista.append({"id": maior_id + 1, "titulo": task, "concluida": False})
+    if len(lista) == 0:
+        lista.append({"id": 1, "titulo": task, "concluida": False})
+    else:
+        maior_id = max(i["id"] for i in lista) # foi muito dificil pegar esse id n sei oq fazer tive que pesquisar
+        lista.append({"id": maior_id + 1, "titulo": task, "concluida": False})
     return lista
     
 
