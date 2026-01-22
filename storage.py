@@ -1,11 +1,11 @@
 import json
 
-def salvar_tarefas(lista):
+def salvar_tarefas(colecao):
     ARQUIVO = "storage.json"
     arquivo = open(ARQUIVO, 'w')
-    arquivo.write(json.dumps(lista)) #Conversão para json
+    arquivo.write(json.dumps(colecao)) #Conversão para json
     arquivo.close()
-    
+
 def carregar_tarefas():
     ARQUIVO = "storage.json"
     try:
@@ -16,3 +16,4 @@ def carregar_tarefas():
     
     except json.JSONDecodeError:
         return []
+

@@ -1,50 +1,46 @@
-from storage import carregar_tarefas, salvar_tarefas
+def nova_lista(nome_lista, dados):
+    if nome_lista in dados:
+        return False 
+    dados[nome_lista] = []
+    return True
 
-def adicionar_tarefa(task):
-    tarefas = carregar_tarefas()
-    if tarefas:
-        novo_id = max(t["id"] for t in tarefas) + 1
+def adicionar_tarefa(task, lista_escolhida, dados):
+    if lista_escolhida not in dados:
+        return False
+    if dados[lista_escolhida]:
+        novo_id = max(t["id"] for t in dados[lista_escolhida]) + 1
     else:
         novo_id = 1
-
-    tarefas.append({
+    dados[lista_escolhida].append({
         "id": novo_id,
         "titulo": task,
         "concluida": False
     })
-
-    return tarefas
-
-
-def listar_tarefas(lista):
-    if len(lista) > 0:
-        for tarefa in lista:
-            if tarefa["concluida"]:
-                status = "✅"
-            else:
-                status = "❌"
-            print(tarefa["titulo"], "-", status)
-    else:
-        print("Você não possui nenhuma tarefa!")
+    return True
 
 
-def concluir_tarefa(lista, id_tarefa):
-    i = 0
-    while i < len(lista):
-        if lista[i]["id"] == id_tarefa:
-            lista[i]["concluida"] = True
-            return lista
-        i += 1
-    print("ID não encontrado.")
-    return lista
-  
+def listar_tarefas(lista_escolhida, dados):
+    if lista_escolhida not in dados:
+        return None
+    return dados[lista_escolhida]
 
-def remover_tarefa(lista, id_tarefa):
-    x = 0
-    while x < len(lista):
-        if lista[x]["id"] == id_tarefa:
-            lista.pop(x)
-            return lista
-        x += 1
-    print("ID não encontrado.")
-    return lista
+
+def concluir_tarefa(lista_escolhida, id_tarefa, dados):
+    for tarefa in dados[lista_escolhida]:
+        if tarefa["id"] == id_tarefa:
+            tarefa["concluida"] = True
+            return True
+    return False
+
+def remover_tarefa(lista_escolhida, id_tarefa, dados):
+    for i, tarefa in enumerate(dados[lista_escolhida]):
+        if tarefa["id"] == id_tarefa:
+            dados[lista_escolhida].pop(i)
+            return True
+    return False
+
+
+def listar_listas(dados):
+    return list(dados.keys())
+
+
